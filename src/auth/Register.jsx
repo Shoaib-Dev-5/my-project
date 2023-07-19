@@ -1,4 +1,16 @@
+import { useCreateUserWithEmailAndPassword } from 'react-firebase-hooks/auth';
+import { auth } from '../firebase/Client';
+import { useState } from 'react';
 const Register = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [
+    createUserWithEmailAndPassword,
+    user,
+    loading,
+    error,
+  ] = useCreateUserWithEmailAndPassword(auth);
+  console.log("user",user?.user);
   return (
     <div>
       <div>
@@ -6,11 +18,11 @@ const Register = () => {
         <p>Sign in with your email and password</p>
       </div>
       <div>
-        <input type="text" placeholder="Name" />
-        <input type="text" placeholder="Password" />
+        <input type="email" value={email} onChange={(e)=>setEmail(e.target.value)} placeholder="Email" />
+        <input type="password" value={password} onChange={(e)=>setPassword(e.target.value)} placeholder="Password" />
       </div>
       <div>
-        <button>Sign In</button>
+        <button onClick={() => createUserWithEmailAndPassword(email, password)}>Sign In</button>
         <button>Google SignIn</button>
       </div>
     </div>

@@ -1,4 +1,17 @@
+import { useSignInWithEmailAndPassword } from "react-firebase-hooks/auth";
+import { auth } from "../firebase/Client";
+import { useState } from "react";
+
 const Login = () => {
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [
+    signInWithEmailAndPassword,
+    user,
+    loading,
+    error,
+  ] = useSignInWithEmailAndPassword(auth);
+  console.log("user",user);
     return (
       <div>
         <div>
@@ -6,13 +19,11 @@ const Login = () => {
           <p>Sign in with your email and password</p>
         </div>
         <div>
-          <input type="text" placeholder="Name" />
-          <input type="text" placeholder="Email" />
-          <input type="text" placeholder="Password" />
-          <input type="text" placeholder="Confirm Password" />
+          <input type="email" placeholder="Email" value={email} onChange={(e)=>setEmail(e.target.value)} />
+          <input type="password" placeholder="Password" value={password} onChange={(e)=>setPassword(e.target.value)} />
         </div>
         <div>
-          <button>Sign Up</button>
+          <button onClick={()=>signInWithEmailAndPassword(email,password)}>Sign Up</button>
         </div>
       </div>
     );
